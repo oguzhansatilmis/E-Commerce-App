@@ -2,6 +2,8 @@ package com.android.ecommerceapp.di
 
 import com.android.ecommerceapp.service.ApiService
 import com.android.ecommerceapp.util.Constants
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,10 +22,19 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideConverterFactory(): GsonConverterFactory =
+        GsonConverterFactory.create(GsonBuilder().serializeNulls().create())
+
+    @Singleton
+    @Provides
+    fun provideGson() = Gson()
+
+    @Singleton
+    @Provides
     @Named("loggingInterceptor")
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-            this.level = HttpLoggingInterceptor.Level.BASIC
+            this.level = HttpLoggingInterceptor.Level.BODY
         }
     }
 

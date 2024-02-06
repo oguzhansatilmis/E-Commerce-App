@@ -1,15 +1,8 @@
 package com.android.ecommerceapp.model
 
-sealed class Result<out T>{
+sealed class Result<T>(val data: T?=null,val message: String?=null){
 
-    data class Success<out T>(val data :T) : Result <T>()
-    data class Error(val message :String?,val data :Nothing?= null) :Result<Nothing>()
-
-    class Loading<out T> : Result<T>() {
-        companion object {
-            fun <T> create(): Loading<T> {
-                return Loading()
-            }
-        }
-    }
+    class Success<T>(data: T) : Result<T>(data)
+    class Error<T>(message: String, data: T? = null) : Result<T>(data, message)
+    class Loading<T> (data: T? = null): Result<T>(data)
 }

@@ -18,29 +18,9 @@ class ProductViewModel @Inject constructor(
     private val repository: CommerceRepository
 ) :ViewModel() {
 
-    private val _productResponseState = MutableStateFlow<Result<Response<List<Product>>>>(Result.Loading.create())
+    private val _productResponseState = MutableStateFlow<Result<Response<List<Product>>>>(Result.Loading())
     val productResponseState :StateFlow<Result<Response<List<Product>>>> = _productResponseState
 
-   fun getAllProduct(){
 
-        viewModelScope.launch {
-
-            try {
-                repository.getAllProduct().collect{response->
-                    if (response.isSuccessful){
-                        _productResponseState.value = Result.Success(response)
-                    }
-                    else{
-
-                        _productResponseState.value = Result.Error("${response.code()}")
-                    }
-                }
-            }catch (e:Exception){
-                Log.e("error","$e")
-                _productResponseState.value= Result.Error("$e")
-            }
-        }
-
-    }
 
 }
