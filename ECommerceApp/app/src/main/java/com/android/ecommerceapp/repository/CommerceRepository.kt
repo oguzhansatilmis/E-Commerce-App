@@ -18,4 +18,8 @@ class CommerceRepository @Inject constructor(
         apiService.getAllProducts()
     }
 
+    suspend fun getCategoryItems(category:String)= safeApiCall {
+        apiService.getCategoryItems(category)
+    }
+
 }

@@ -20,12 +20,15 @@ class HomeViewModel @Inject constructor(
     val categoriesResponseState: StateFlow<Result<Response<List<String>>>> = _categoriesResponseState
 
 
-     fun getAllCategories(){
+    init {
+        getAllCategories()
+    }
+
+    private fun getAllCategories(){
 
         viewModelScope.launch {
 
            val categories =  repository.getCategories()
-
 
             categories?.let {response->
                 if (categories.isSuccessful){
@@ -34,7 +37,6 @@ class HomeViewModel @Inject constructor(
                 else{
                     _categoriesResponseState.value = Result.Error("ErrorMessage",response)
                 }
-
             }
         }
 

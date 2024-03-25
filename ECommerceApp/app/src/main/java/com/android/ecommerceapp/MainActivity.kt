@@ -23,27 +23,14 @@ class MainActivity : AppCompatActivity() {
     private var isShowingDialog = false
     private var isShowingInfo = false
     private val constraintSet = ConstraintSet()
-    private lateinit var navHostFragment: NavHostFragment
-    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-
         setContentView(binding.root)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        navController = navHostFragment.findNavController()
-
-        setupActionBarWithNavController(navController)
-
     }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return  navController.navigateUp() && super.onSupportNavigateUp()
-    }
-
-
 
     fun showProgress() {
         isShowingDialog = true

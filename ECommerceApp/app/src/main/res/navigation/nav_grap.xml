@@ -6,24 +6,28 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/productFragment"
-        android:name="com.android.ecommerceapp.ui.product.ProductFragment"
-        android:label="fragment_product"
-        tools:layout="@layout/fragment_product" />
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.android.ecommerceapp.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home"
         tools:ignore="ExtraText">
         <action
-            android:id="@+id/action_homeFragment_to_productFragment"
-            app:destination="@id/productFragment"/>
+            android:id="@+id/action_homeFragment_to_electronicsFragment"
+            app:destination="@id/electronicsFragment" />
 
         <!--
            app:popUpTo="@id/homeFragment"
         app:popUpToInclusive="true"
         -->
 
+    </fragment>
+    <fragment
+        android:id="@+id/electronicsFragment"
+        android:name="com.android.ecommerceapp.ui.electronics.ElectronicsFragment"
+        android:label="fragment_electronics"
+        tools:layout="@layout/fragment_electronics" >
+        <argument
+            android:name="categoryArgument"
+            app:argType="string" />
     </fragment>
 </navigation>

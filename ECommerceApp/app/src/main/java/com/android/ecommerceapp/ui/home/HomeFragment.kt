@@ -1,5 +1,6 @@
 package com.android.ecommerceapp.ui.home
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
@@ -15,9 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment :
-    BaseFragment<FragmentHomeBinding, HomeViewModel, MainActivity>(FragmentHomeBinding::inflate) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel, MainActivity>(FragmentHomeBinding::inflate) {
     override val viewModel by viewModels<HomeViewModel>()
+
+
     override fun onCreateFinished() {
 
         setupCategoryImage()
@@ -25,18 +27,27 @@ class HomeFragment :
 
     override fun initializeListeners() {
 
+        binding.electronicsImage.setOnClickListener {
+            val bundle = Bundle()
+            bundle.apply {
+                putString("categoryArgument","electronics")
+            }
+            findNavController().navigate(R.id.action_homeFragment_to_electronicsFragment,bundle)
+
+        }
+
+
     }
 
     override fun observeEvents() {
 
-    observeCategories()
+        observeCategories()
 
     }
 
-    private fun observeCategories(){
+    private fun observeCategories() {
         lifecycleScope.launch {
 
-            viewModel.getAllCategories()
 
             viewModel.categoriesResponseState.collect {
 
@@ -54,19 +65,17 @@ class HomeFragment :
                                 binding.menClothingText,
                                 binding.womenClothingText
                             )
-
                             elementId[index].text = product
                         }
-
                     }
+
                     is Result.Loading -> {
                         activity().showProgress()
                     }
 
                     is Result.Error -> {
 
-                        activity().showMessage("it.message",MessageType.ERROR)
-
+                        activity().showMessage("it.message", MessageType.ERROR)
 
                     }
                 }
